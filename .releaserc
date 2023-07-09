@@ -41,7 +41,7 @@
                 },
                 {
                     "key": "RepositoryCommit",
-                    "value": "${CI_COMMIT_SHA}"
+                    "value": "${nextRelease.gitHead}"
                 }
             ]
         }
