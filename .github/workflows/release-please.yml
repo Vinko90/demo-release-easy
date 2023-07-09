@@ -22,8 +22,9 @@ jobs:
 
       - name: Semantic Release
         id: release
-        uses: cycjimmy/semantic-release-action@v3
+        uses: cycjimmy/semantic-release-action@v3.4.1
         with:
+          semantic_version: 18
           extra_plugins: |
             @semantic-release/commit-analyzer
             @semantic-release/release-notes-generator
