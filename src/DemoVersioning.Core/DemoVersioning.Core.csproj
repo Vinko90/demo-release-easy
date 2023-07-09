@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>0.0.0</Version>
-    <RepositoryCommit>SHA</RepositoryCommit>
+    <Version>1.1.0</Version>
+    <RepositoryCommit>4ed921a4a520796c07672977fc4f205149a20283</RepositoryCommit>
   </PropertyGroup>
 
 </Project>
