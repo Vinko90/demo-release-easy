@@ -29,9 +29,8 @@ jobs:
             @semantic-release/release-notes-generator
             @semantic-release/changelog
             @droidsolutions-oss/semantic-release-update-file
-            @semantic-release/git
             @semantic-release/github
-            
+            @semantic-release/git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
