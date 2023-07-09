@@ -1,13 +1,16 @@
 name: Release Please
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
+env:
+  PROJECT_PATH: 'src/DemoVersioning.App/DemoVersioning.App.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
+#  NUGET_PUSH_URL: ${{ secrets.NUGET_PUSH_URL }}
+#  NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
 
 jobs:
   release-please:
@@ -15,12 +18,35 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Run release-please
-        uses: google-github-actions/release-please-action@v3
+      - name: Semantic Release
         id: release
+        uses: cycjimmy/semantic-release-action@v3
         with:
-          command: manifest
-          token: ${{secrets.GITHUB_TOKEN}}
-          default-branch: main
+          working_directory: ./Gpanga.Example.SDK
+          extra_plugins: |
+            @semantic-release/commit-analyzer
+            @semantic-release/release-notes-generator
+            @semantic-release/changelog
+            @droidsolutions-oss/semantic-release-update-file
+            @semantic-release/git
+            @semantic-release/github
+            
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Do something when a new release published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+          echo ${{ steps.semantic.outputs.new_release_major_version }}
+          echo ${{ steps.semantic.outputs.new_release_minor_version }}
+          echo ${{ steps.semantic.outputs.new_release_patch_version }}
+
+#      - name: 'Pack & Publish project'
+#        if: ${{ steps.release.outputs.new_release_version }}
+#        run: |
+#          dotnet clean
+#          dotnet pack ${{ env.PROJECT_PATH }} --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+#          dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s ${{ env.NUGET_PUSH_URL }}

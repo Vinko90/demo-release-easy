@@ -1,0 +1,49 @@
+{
+    "branches": [
+        "v+([0-9])?(.{+([0-9]),x}).x",
+        "main",
+        {
+            "name": "beta",
+            "prerelease": true
+        },
+        {
+            "name": "alpha",
+            "prerelease": true
+        }
+    ],
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
+        "@semantic-release/changelog",
+        "@droidsolutions-oss/semantic-release-update-file",
+        [
+            "@semantic-release/git",
+            {
+                "assets": [
+                    "CHANGELOG.md",
+                    "src/DemoVersioning.Core/DemoVersioning.Core.csproj"
+                ],
+                "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+            }
+        ],
+        "@semantic-release/github"
+    ],
+    "files": [
+        {
+            "path": [
+                "src/DemoVersioning.Core/DemoVersioning.Core.csproj"
+            ],
+            "type": "xml",
+            "replacements": [
+                {
+                    "key": "Version",
+                    "value": "${nextRelease.version}"
+                },
+                {
+                    "key": "RepositoryCommit",
+                    "value": "${CI_COMMIT_SHA}"
+                }
+            ]
+        }
+    ]
+}
