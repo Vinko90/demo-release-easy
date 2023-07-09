@@ -1,5 +1,0 @@
-mode: ContinuousDelivery
-assembly-versioning-scheme: MajorMinorPatch
-assembly-file-versioning-scheme: MajorMinorPatchTag
-assembly-informational-format: '{Major}.{Minor}.{Patch}-alpha{CommitsSinceVersionSource}'
-tag-prefix: ''
