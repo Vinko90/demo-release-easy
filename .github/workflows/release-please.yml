@@ -24,7 +24,6 @@ jobs:
         id: release
         uses: cycjimmy/semantic-release-action@v3
         with:
-          working_directory: ./Gpanga.Example.SDK
           extra_plugins: |
             @semantic-release/commit-analyzer
             @semantic-release/release-notes-generator
